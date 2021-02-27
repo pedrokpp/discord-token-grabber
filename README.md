@@ -11,4 +11,5 @@ Remember to edit the source code with your own webhook url or else it won't send
 Use the binary version available at [releases]()
 
 ## TODO
-- [ ] Send it to a Discord Webhook
+- [x] Send it to a Discord Webhook
+- [ ] Get more information about the target
