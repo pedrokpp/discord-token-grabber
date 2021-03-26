@@ -21,3 +21,4 @@ It is recommended to use the [generator](https://github.com/pedrokpp/discord-tok
 - [x] Beautify webhook message
 - [x] Get more information about the target
 - [ ] Beautify even more the webhook message
+- [ ] Obfuscate in order to bypass virus total
